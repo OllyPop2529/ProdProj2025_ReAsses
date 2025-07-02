@@ -1,10 +1,12 @@
 package com.example.productionproject
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -21,10 +23,12 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.pp2025_reasses.R
 
 class LoginActivityView {
 
@@ -53,25 +57,61 @@ fun LoginPage()
                 .padding(top = 15.dp)
                 .background(Color.LightGray),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.Center
+            verticalArrangement = Arrangement.SpaceBetween
         )
         {
+            //Application Icon
+            Image(
+                painter = painterResource(R.drawable.ic_launcher_background),
+                contentDescription = "Application Icon",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .weight(0.9f)
+            )
 
 
+            //First Time Prompt
+            Text(
+                text = "First time password",
+                textAlign = TextAlign.Justify,
+                fontSize = 25.sp,
+                lineHeight = 55.sp,
+                modifier = Modifier
+                    .weight(0.2f)
+                    .padding(vertical = 10.dp)
 
+
+            )
         }
         ////////////////////////////////////////////////////////
 
         // Bottom 1/3
         // Contains Password InputField + Confirmation Button
         Column(
+            verticalArrangement = Arrangement.Top,
+            horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
                 .weight(3.5f)
                 .padding(bottom = 15.dp)
                 .background(Color.Red),
         )
         {
+            //Password Field
+            PasswordInputField(
+                modifier = Modifier
+                    .fillMaxWidth(0.95f)
+                    .padding(vertical = 35.dp)
+            )
 
+            //Confirm Button
+            ConfirmButton(
+                onClick = {},
+                text = "Enter",
+                modifier = Modifier
+                    .fillMaxWidth(0.55f)
+                    .fillMaxSize(0.425f)
+                    .padding()
+            )
         }
         ////////////////////////////////////////////////////////
     }
@@ -81,8 +121,10 @@ fun LoginPage()
 }
 
 
+
+
 @Composable
-fun PasswordInputField()
+fun PasswordInputField(modifier: Modifier)
 {
     var data by remember { mutableStateOf("") }
 
@@ -91,7 +133,7 @@ fun PasswordInputField()
         if(data == "") ""
         else data,
         onValueChange = {data = it},
-        modifier = Modifier
+        modifier = modifier
             .padding(vertical = 10.dp, horizontal = 5.dp)
     )
 }
@@ -100,8 +142,8 @@ fun PasswordInputField()
 @Composable
 fun ConfirmButton(
     onClick: () -> Unit,
+    text : String,
     modifier: Modifier,
-    text : String
 ) {
     Button(
         onClick = { onClick() },
