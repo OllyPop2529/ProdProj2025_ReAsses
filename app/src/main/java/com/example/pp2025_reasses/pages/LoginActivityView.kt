@@ -1,6 +1,8 @@
 package com.example.productionproject
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -17,6 +19,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -28,6 +32,50 @@ class LoginActivityView {
 @Composable
 fun LoginPage()
 {
+    val modifier : Modifier = Modifier
+        .padding(horizontal = 15.dp)
+        .fillMaxSize()
+        .alpha(0.5f)
+
+
+
+    Column(
+        modifier = Modifier.fillMaxSize()
+    )
+
+    {
+        // Top 2/3
+        // Contains Icon and First Time Welcome Text
+        Column(
+            modifier = modifier
+                .weight(6.5f)
+                .padding(top = 15.dp)
+                .background(Color.LightGray),
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        )
+        {
+
+
+
+        }
+        ////////////////////////////////////////////////////////
+
+        // Bottom 1/3
+        // Contains Password InputField + Confirmation Button
+        Column(
+            modifier = modifier
+                .weight(3.5f)
+                .padding(bottom = 15.dp)
+                .background(Color.Red),
+        )
+        {
+
+        }
+        ////////////////////////////////////////////////////////
+    }
+
+
 
 }
 
