@@ -19,28 +19,28 @@ import com.example.productionproject.LoginPage
         navController: NavHostController = rememberNavController()
     )
     {
-        //val uiState by viewModel.uiState.collectAsState()
-        NavHost(
-            navController = navController,
-            startDestination = LocationTrackingApp.Login.name,
-            modifier = Modifier.padding(all = 10.dp)
-        ) {
+            //val uiState by viewModel.uiState.collectAsState()
+            NavHost(
+                navController = navController,
+                startDestination = LocationTrackingApp.Login.name,
+                modifier = Modifier.padding(all = 10.dp)
+            ) {
 
-            composable(route = LocationTrackingApp.Login.name) {
-                LoginPage()
+                composable(route = LocationTrackingApp.Login.name) {
+                    LoginPage()
+
+                }
+
+                composable(route = LocationTrackingApp.Location.name) {
+                    LocationPage()
+
+                }
+                composable(route = LocationTrackingApp.Setting.name) {
+                    SettingsPage()
+
+                }
 
             }
-
-            composable(route = LocationTrackingApp.Location.name) {
-                LocationPage()
-
-            }
-            composable(route = LocationTrackingApp.Setting.name) {
-                SettingsPage()
-
-            }
-
-        }
     }
 
     enum class LocationTrackingApp()

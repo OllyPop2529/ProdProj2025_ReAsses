@@ -12,6 +12,7 @@ import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -31,90 +32,89 @@ import androidx.compose.ui.unit.sp
 import com.example.pp2025_reasses.R
 
 @Composable
-fun LoginPage()
-{
-    val modifier : Modifier = Modifier
-        .padding(horizontal = 15.dp)
+fun LoginPage(
+) {
+    val collumnmodifier: Modifier = Modifier
         .fillMaxSize()
         .alpha(0.5f)
 
 
-
-    Column(
-        modifier = Modifier.fillMaxSize()
-    )
-
-    {
-        // Top 2/3
-        // Contains Icon and First Time Welcome Text
+    Scaffold(topBar = {})
+    { it ->
         Column(
-            modifier = modifier
-                .weight(6.5f)
-                .padding(top = 15.dp)
-                .background(Color.LightGray),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(it)
+                .padding(horizontal = 0.dp)
+
         )
         {
-            //Application Icon
-            Image(
-                painter = painterResource(R.drawable.ic_launcher_background),
-                contentDescription = "Application Icon",
-                modifier = Modifier
-                    .fillMaxSize()
-                    .weight(0.9f)
+            // Top 2/3
+            // Contains Icon and First Time Welcome Text
+            Column(
+                modifier = collumnmodifier
+                    .weight(6.5f)
+                    .background(Color.LightGray),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween
             )
+            {
+                //Application Icon
+                Image(
+                    painter = painterResource(R.drawable.ic_launcher_background),
+                    contentDescription = "Application Icon",
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .weight(0.9f)
+                )
 
 
-            //First Time Prompt
-            Text(
-                text = "First time password",
-                textAlign = TextAlign.Justify,
-                fontSize = 25.sp,
-                lineHeight = 55.sp,
-                modifier = Modifier
-                    .weight(0.2f)
-                    .padding(vertical = 10.dp)
+                //First Time Prompt
+                Text(
+                    text = "First time password",
+                    textAlign = TextAlign.Justify,
+                    fontSize = 25.sp,
+                    lineHeight = 55.sp,
+                    modifier = Modifier
+                        .weight(0.2f)
+                        .padding(vertical = 10.dp)
 
 
+                )
+            }
+            ////////////////////////////////////////////////////////
+
+            // Bottom 1/3
+            // Contains Password InputField + Confirmation Button
+            Column(
+                verticalArrangement = Arrangement.Top,
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = collumnmodifier
+                    .weight(3.5f)
+                    .background(Color.Red),
             )
+            {
+                //Password Field
+                PasswordInputField(
+                    modifier = Modifier
+                        .fillMaxWidth(0.95f)
+                        .padding(vertical = 35.dp)
+                )
+
+                //Confirm Button
+                ConfirmButton(
+                    onClick = {},
+                    text = "Enter",
+                    modifier = Modifier
+                        .fillMaxWidth(0.55f)
+                        .fillMaxSize(0.425f)
+                )
+            }
+            ////////////////////////////////////////////////////////
         }
-        ////////////////////////////////////////////////////////
-
-        // Bottom 1/3
-        // Contains Password InputField + Confirmation Button
-        Column(
-            verticalArrangement = Arrangement.Top,
-            horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier
-                .weight(3.5f)
-                .padding(bottom = 15.dp)
-                .background(Color.Red),
-        )
-        {
-            //Password Field
-            PasswordInputField(
-                modifier = Modifier
-                    .fillMaxWidth(0.95f)
-                    .padding(vertical = 35.dp)
-            )
-
-            //Confirm Button
-            ConfirmButton(
-                onClick = {},
-                text = "Enter",
-                modifier = Modifier
-                    .fillMaxWidth(0.55f)
-                    .fillMaxSize(0.425f)
-                    .padding()
-            )
-        }
-        ////////////////////////////////////////////////////////
     }
-
-
-
 }
+
 
 
 
