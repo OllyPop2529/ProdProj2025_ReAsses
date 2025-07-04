@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -28,8 +30,23 @@ class SettingsActivityView {
 
 
     @Composable
-    fun SettingPage()
+    fun SettingsPage()
     {
+        //Empty Spacing for Padding, Will Contain Icon
+        Scaffold(
+            topBar = {},
+        )
+        {   it ->
+            //LazyColumn acting as page scrolling
+            LazyColumn(contentPadding = it)
+            {
+                items(5)
+                {
+                    SectionBlock()
+                }
+
+            }
+        }
 
     }
 
@@ -37,7 +54,24 @@ class SettingsActivityView {
     @Composable
     fun SectionBlock()
     {
+        // Keeps section Open/Close
+        var isOpen by remember { mutableStateOf(true) }
 
+        Column()
+        {
+            SectionHeader(
+                title = "Bluetooth Test",
+                isOpen = isOpen,
+                onSectionSelect = {isOpen = !isOpen},
+                modifier = Modifier
+            )
+            if (isOpen)
+            {
+                OptionBlock("Connectivity","ABC",1, null)
+                OptionBlock("Speedivity","24124",1, null)
+                OptionBlock("Magical Capability","100%",1, null)
+            }
+        }
     }
 
 
@@ -89,6 +123,7 @@ class SettingsActivityView {
         condition: String?,
     )
     {
+        //Surface - Added to apply color from theme (WIP)
         Surface()
         {
 
@@ -170,7 +205,6 @@ class SettingsActivityView {
     {
 
 
-
     }
 
 
@@ -178,7 +212,7 @@ class SettingsActivityView {
     @Composable
     fun DropDownPreview()
     {
-
+        SectionBlock()
 
     }
 
