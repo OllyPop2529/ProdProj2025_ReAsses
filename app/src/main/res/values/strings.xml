@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">PP2025_Reasses</string>
+    <string name="title_activity_maps">MapsActivity</string>
 </resources>
