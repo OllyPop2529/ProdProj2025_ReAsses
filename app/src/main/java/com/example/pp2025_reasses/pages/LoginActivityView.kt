@@ -30,10 +30,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pp2025_reasses.R
 
-class LoginActivityView {
-
-}
-
 @Composable
 fun LoginPage()
 {

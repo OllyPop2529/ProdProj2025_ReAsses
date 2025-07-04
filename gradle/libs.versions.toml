@@ -15,6 +15,7 @@ navigationTesting = "2.9.1"
 playServicesMaps = "19.2.0"
 appcompat = "1.7.0"
 constraintlayout = "2.2.1"
+navigationComposeAndroid = "2.9.1"
 
 [libraries]
 androidx-compose-bom-v20230501 = { module = "androidx.compose:compose-bom", version.ref = "composeBomVersion" }
@@ -39,6 +40,7 @@ play-services-maps = { group = "com.google.android.gms", name = "play-services-m
 androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
+androidx-navigation-compose-android = { group = "androidx.navigation", name = "navigation-compose-android", version.ref = "navigationComposeAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

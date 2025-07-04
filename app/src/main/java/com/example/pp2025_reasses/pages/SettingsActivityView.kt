@@ -25,18 +25,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
-class SettingsActivityView {
-
-
 
     @Composable
-    fun SettingsPage()
-    {
+    fun SettingsPage() {
         //Empty Spacing for Padding, Will Contain Icon
         Scaffold(
             topBar = {},
         )
-        {   it ->
+        { it ->
             //LazyColumn acting as page scrolling
             LazyColumn(contentPadding = it)
             {
@@ -52,8 +48,7 @@ class SettingsActivityView {
 
 
     @Composable
-    fun SectionBlock()
-    {
+    fun SectionBlock() {
         // Keeps section Open/Close
         var isOpen by remember { mutableStateOf(true) }
 
@@ -62,18 +57,16 @@ class SettingsActivityView {
             SectionHeader(
                 title = "Bluetooth Test",
                 isOpen = isOpen,
-                onSectionSelect = {isOpen = !isOpen},
+                onSectionSelect = { isOpen = !isOpen },
                 modifier = Modifier
             )
-            if (isOpen)
-            {
-                OptionBlock("Connectivity","ABC",1, null)
-                OptionBlock("Speedivity","24124",1, null)
-                OptionBlock("Magical Capability","100%",1, null)
+            if (isOpen) {
+                OptionBlock("Connectivity", "ABC", 1, null)
+                OptionBlock("Speedivity", "24124", 1, null)
+                OptionBlock("Magical Capability", "100%", 1, null)
             }
         }
     }
-
 
 
     @Composable
@@ -83,8 +76,7 @@ class SettingsActivityView {
         onSectionSelect: () -> Unit,
         modifier: Modifier
 
-    )
-    {
+    ) {
         //Surface - Added to apply color from theme (WIP)
         Surface(
 
@@ -109,7 +101,6 @@ class SettingsActivityView {
             }
 
 
-
             ////////////////////////////////////////////////////////
         }
 
@@ -121,8 +112,7 @@ class SettingsActivityView {
         description: String,
         type: Int,
         condition: String?,
-    )
-    {
+    ) {
         //Surface - Added to apply color from theme (WIP)
         Surface()
         {
@@ -164,8 +154,7 @@ class SettingsActivityView {
                 //Setting Input Type
                 when (type) {
                     //Input Box
-                    1 ->
-                    {
+                    1 -> {
                         SettingInputField(condition, modifier)
                     }
                 }
@@ -176,13 +165,12 @@ class SettingsActivityView {
     }
 
     @Composable
-    fun SettingInputField(condition: String?, modifier: Modifier)
-    {
+    fun SettingInputField(condition: String?, modifier: Modifier) {
         var data by remember { mutableStateOf("") }
 
         TextField(
             value = data,
-            onValueChange = {data = it},
+            onValueChange = { data = it },
             label =
             {
                 if (condition != null)
@@ -196,13 +184,9 @@ class SettingsActivityView {
     }
 
 
-
-
-
     @Preview(showBackground = true)
     @Composable
-    private fun SettingPagePreview()
-    {
+    private fun SettingPagePreview() {
 
 
     }
@@ -210,10 +194,8 @@ class SettingsActivityView {
 
     @Preview(showBackground = true)
     @Composable
-    fun DropDownPreview()
-    {
+    fun DropDownPreview() {
         SectionBlock()
 
     }
 
-}

@@ -23,9 +23,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pp2025_reasses.R
 
-class LocationActivityView
-{
-
 
 @Composable
 fun LocationPage()
@@ -131,4 +128,3 @@ fun LocationPage()
     {
         LocationPage()
     }
-}

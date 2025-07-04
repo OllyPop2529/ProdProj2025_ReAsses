@@ -54,6 +54,7 @@ dependencies {
     implementation(libs.play.services.maps)
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
+    implementation(libs.androidx.navigation.compose.android)
     androidTestImplementation(platform(libs.androidx.compose.bom.v20230501))
     androidTestImplementation(libs.ui.test.junit4)
     androidTestImplementation(libs.androidx.navigation.testing)
