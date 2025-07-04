@@ -2,8 +2,16 @@ package com.example.pp2025_reasses.pages
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
@@ -53,14 +61,43 @@ fun LocationPage()
 
         )
         {
+            val buttonModifier : Modifier = Modifier
+                .padding(all = 25.dp)
+                //.fillMaxWidth(0.8f)
+                //.fillMaxHeight(0.4f)
+                .fillMaxSize()
+                //.weight(1f)
 
+            NavigationButton({},modifier = buttonModifier, "Settings")
         }
         ////////////////////////////////////////////////////////
     }
 
-
-
 }
+
+    @Composable
+    fun NavigationButton(
+        onClick: () -> Unit,
+        modifier: Modifier,
+        text : String
+    ) {
+        Button(
+            onClick = { onClick() },
+            shape = RoundedCornerShape(corner = CornerSize(10.dp)),
+            modifier = modifier,
+            elevation = ButtonDefaults.buttonElevation(5.dp,0.dp)
+        )
+        {
+            Row(
+                modifier = Modifier
+            )
+            {
+                Text(text)
+
+            }
+
+        }
+    }
 
     @Preview
     @Composable
