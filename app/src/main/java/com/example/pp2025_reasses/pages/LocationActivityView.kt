@@ -1,11 +1,10 @@
 package com.example.pp2025_reasses.pages
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -13,11 +12,16 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.example.pp2025_reasses.R
 
 class LocationActivityView
 {
@@ -42,7 +46,7 @@ fun LocationPage()
         // Contains Connection Prompt / Device status
         Column(
             modifier = modifier
-                .weight(6.5f)
+                .weight(8f)
                 .padding(top = 15.dp)
                 .background(Color.LightGray),
         )
@@ -55,7 +59,7 @@ fun LocationPage()
         // Contains setting + navigation
         Column(
             modifier = modifier
-                .weight(3.5f)
+                .weight(2f)
                 .padding(bottom = 15.dp)
                 .background(Color.Red)
 
@@ -68,7 +72,11 @@ fun LocationPage()
                 .fillMaxSize()
                 //.weight(1f)
 
-            NavigationButton({},modifier = buttonModifier, "Settings")
+            NavigationButton(
+                onClick = {},
+                modifier = buttonModifier,
+                text = "Settings",
+                image = R.drawable.setting)
         }
         ////////////////////////////////////////////////////////
     }
@@ -79,6 +87,7 @@ fun LocationPage()
     fun NavigationButton(
         onClick: () -> Unit,
         modifier: Modifier,
+        image: Int,
         text : String
     ) {
         Button(
@@ -92,7 +101,24 @@ fun LocationPage()
                 modifier = Modifier
             )
             {
-                Text(text)
+                Image(
+                    painter = painterResource(image),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .weight(1f)
+
+                )
+                Text(
+                    text = text,
+                    textAlign = TextAlign.Center,
+                    fontSize = 36.sp,
+                    lineHeight = 20.sp,
+                    modifier = Modifier
+                        .weight(1.5f)
+                        .padding(5.dp)
+                        .align(Alignment.CenterVertically)
+
+                )
 
             }
 
