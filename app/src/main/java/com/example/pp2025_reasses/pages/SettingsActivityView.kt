@@ -1,6 +1,8 @@
 package com.example.pp2025_reasses.pages
 
 
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -41,8 +43,41 @@ class SettingsActivityView {
 
 
     @Composable
-    fun SectionHeader(title: String, modifier: Modifier)
+    fun SectionHeader(
+        title: String,
+        isOpen: Boolean,
+        onSectionSelect: () -> Unit,
+        modifier: Modifier
+
+    )
     {
+        //Surface - Added to apply color from theme (WIP)
+        Surface(
+
+        )
+        {
+
+            Row(
+                modifier = Modifier
+                    .clickable { onSectionSelect() }
+                    .fillMaxWidth(0.3f)
+                    .padding(vertical = 10.dp, horizontal = 10.dp),
+                verticalAlignment = Alignment.Bottom,
+                horizontalArrangement = Arrangement.Start
+            )
+            {
+                //Title of the section
+                Text(
+                    text = title,
+                )
+
+
+            }
+
+
+
+            ////////////////////////////////////////////////////////
+        }
 
     }
 
@@ -121,7 +156,7 @@ class SettingsActivityView {
                     ""
             },
             modifier = modifier
-                .padding(top = 10.dp, start = 5.dp, end = 5.dp, bottom = 10.dp)
+                .padding(vertical = 10.dp, horizontal = 5.dp)
         )
     }
 
@@ -143,10 +178,7 @@ class SettingsActivityView {
     @Composable
     fun DropDownPreview()
     {
-        SectionHeader(
-            "ABC",
-            modifier = Modifier
-        )
+
 
     }
 
