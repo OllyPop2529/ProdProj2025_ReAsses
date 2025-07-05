@@ -35,7 +35,11 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import android.Manifest
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import com.example.pp2025_reasses.R
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
@@ -143,8 +147,7 @@ fun NavigationButton(
 }
 
 @Composable
-fun GoogleMapView()
-{
+fun GoogleMapView() {
     val context = LocalContext.current
     val mapView = remember {
         MapView(context).apply {
@@ -152,15 +155,42 @@ fun GoogleMapView()
         }
     }
 
+    var permissionGranted by remember { mutableStateOf(false) }
+
+    // Ask for location permission
+    RequestLocationPermission {
+        permissionGranted = true
+    }
+
     AndroidView(factory = { mapView }) { view ->
         mapView.getMapAsync { googleMap ->
-            val location = LatLng(-34.0, 151.0)
-            googleMap.addMarker(MarkerOptions().position(location).title("Marker"))
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10f))
+
+            if (permissionGranted) {
+                try {
+                    googleMap.isMyLocationEnabled = true
+
+                    // ✅ CENTER THE CAMERA ON USER LOCATION
+                    val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
+                    fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                        if (location != null) {
+                            val userLatLng = LatLng(location.latitude, location.longitude)
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(userLatLng, 15f))
+                        }
+                    }
+
+                } catch (e: SecurityException) {
+                    e.printStackTrace()
+                }
+            } else {
+                // Optional fallback marker if location isn't available yet
+                val fallbackLocation = LatLng(-34.0, 151.0)
+                googleMap.addMarker(MarkerOptions().position(fallbackLocation).title("Default Marker"))
+                googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(fallbackLocation, 10f))
+            }
         }
     }
 
-    // Ensure lifecycle hooks are correctly forwarded to the MapView
+    // Map lifecycle binding
     val lifecycleObserver = rememberMapLifecycle(mapView)
     val lifecycle = LocalLifecycleOwner.current.lifecycle
     DisposableEffect(lifecycle) {
@@ -170,6 +200,8 @@ fun GoogleMapView()
         }
     }
 }
+
+
 
 @Composable
 fun RequestLocationPermission(onGranted: () -> Unit) {

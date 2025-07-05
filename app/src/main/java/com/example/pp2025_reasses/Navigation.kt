@@ -27,7 +27,7 @@ import com.example.productionproject.LoginPage
             ) {
 
                 composable(route = LocationTrackingApp.Login.name) {
-                    LocationPage()
+                    LoginPage()
 
                 }
 
