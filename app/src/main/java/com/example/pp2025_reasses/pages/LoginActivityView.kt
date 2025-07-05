@@ -40,13 +40,20 @@ class LoginActivityView {
 }
 
 @Composable
-fun LoginPage()
+fun LoginPage(onAuthentication: () -> Unit)
 {
     val modifier : Modifier = Modifier
         .padding(horizontal = 15.dp)
         .fillMaxSize()
         .alpha(0.5f)
 
+    val context = LocalContext.current
+    val prefs = remember { getEncryptedPrefs(context) }
+    var storedPassword = prefs.getString("password", null)
+    var inputPassword by remember { mutableStateOf("") }
+    var errorText by remember { mutableStateOf("") }
+
+    val isCreating = storedPassword == null
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -76,7 +83,7 @@ fun LoginPage()
 
             //First Time Prompt
             Text(
-                text = "First time password",
+                text = if (isCreating) "Create a password you'll remember!" else "Enter Password",
                 textAlign = TextAlign.Justify,
                 fontSize = 25.sp,
                 lineHeight = 55.sp,
@@ -101,21 +108,35 @@ fun LoginPage()
         )
         {
             //Password Field
-            PasswordInputField(
+            TextField(
+                value = inputPassword,
+                onValueChange = {inputPassword= it},
                 modifier = Modifier
                     .fillMaxWidth(0.95f)
                     .padding(vertical = 35.dp)
             )
 
             //Confirm Button
-            ConfirmButton(
-                onClick = {},
-                text = "Enter",
-                modifier = Modifier
-                    .fillMaxWidth(0.55f)
-                    .fillMaxSize(0.425f)
-                    .padding()
-            )
+            Button(onClick = {
+                if (isCreating) {
+                    prefs.edit().putString("password", inputPassword).apply()
+                    onAuthentication()
+                } else {
+                    if (inputPassword == storedPassword) {
+                        onAuthentication()
+                    } else {
+                        errorText = "Incorrect password"
+                    }
+                }
+            }) {
+                Text(
+                    text = if (isCreating) "Save Password" else "Login",
+                    modifier = Modifier
+                        .fillMaxWidth(0.55f)
+                        .fillMaxSize(0.425f)
+                        .padding()
+                )
+            }
         }
         ////////////////////////////////////////////////////////
     }
@@ -138,61 +159,11 @@ fun getEncryptedPrefs(context: Context): SharedPreferences {
     )
 }
 
-@Composable
-fun PasswordInputField(modifier: Modifier)
-{
-    var data by remember { mutableStateOf("") }
 
-    TextField(
-        value =
-        if(data == "") ""
-        else data,
-        onValueChange = {data = it},
-        modifier = modifier
-            .padding(vertical = 10.dp, horizontal = 5.dp)
-    )
-}
-
-
-@Composable
-fun ConfirmButton(
-    onClick: () -> Unit,
-    text : String,
-    modifier: Modifier,
-) {
-    Button(
-        onClick = { onClick() },
-        shape = RoundedCornerShape(corner = CornerSize(10.dp)),
-        modifier = modifier,
-        elevation = ButtonDefaults.buttonElevation(5.dp,0.dp)
-    )
-    {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround,
-            modifier = Modifier
-                .fillMaxSize()
-        )
-        {
-            Text(
-                text = text,
-                textAlign = TextAlign.Center,
-                fontSize = 22.sp,
-                lineHeight = 20.sp,
-                modifier = Modifier
-                    .weight(1.5f)
-                    .padding(5.dp)
-
-            )
-
-        }
-
-    }
-}
 
 @Preview
 @Composable
 fun LoginActivityPreview()
 {
-    LoginPage()
+    LoginPage({})
 }
