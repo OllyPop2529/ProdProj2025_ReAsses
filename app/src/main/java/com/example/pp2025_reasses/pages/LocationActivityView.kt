@@ -12,17 +12,28 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.viewinterop.AndroidView
+import androidx.lifecycle.DefaultLifecycleObserver
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.compose.LocalLifecycleOwner
 import com.example.pp2025_reasses.MapsActivity
 import com.example.pp2025_reasses.R
+import com.google.android.gms.maps.CameraUpdateFactory
+import com.google.android.gms.maps.MapView
+import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.MarkerOptions
 
 
 @Composable
@@ -49,8 +60,10 @@ fun LocationPage()
                 .background(Color.LightGray),
         )
         {
-            val GMaps = MapsActivity()
+            GoogleMapView()
         }
+
+
         ////////////////////////////////////////////////////////
 
         // Lower 1/3
@@ -81,51 +94,96 @@ fun LocationPage()
 
 }
 
-    @Composable
-    fun NavigationButton(
-        onClick: () -> Unit,
-        modifier: Modifier,
-        image: Int,
-        text : String
-    ) {
-        Button(
-            onClick = { onClick() },
-            shape = RoundedCornerShape(corner = CornerSize(10.dp)),
-            modifier = modifier,
-            elevation = ButtonDefaults.buttonElevation(5.dp,0.dp)
+@Composable
+fun NavigationButton(
+    onClick: () -> Unit,
+    modifier: Modifier,
+    image: Int,
+    text : String
+) {
+    Button(
+        onClick = { onClick() },
+        shape = RoundedCornerShape(corner = CornerSize(10.dp)),
+        modifier = modifier,
+        elevation = ButtonDefaults.buttonElevation(5.dp,0.dp)
+    )
+    {
+        Row(
+            modifier = Modifier
         )
         {
-            Row(
+            Image(
+                painter = painterResource(image),
+                contentDescription = null,
                 modifier = Modifier
+                    .weight(1f)
+
             )
-            {
-                Image(
-                    painter = painterResource(image),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .weight(1f)
+            Text(
+                text = text,
+                textAlign = TextAlign.Center,
+                fontSize = 36.sp,
+                lineHeight = 20.sp,
+                modifier = Modifier
+                    .weight(1.5f)
+                    .padding(5.dp)
+                    .align(Alignment.CenterVertically)
 
-                )
-                Text(
-                    text = text,
-                    textAlign = TextAlign.Center,
-                    fontSize = 36.sp,
-                    lineHeight = 20.sp,
-                    modifier = Modifier
-                        .weight(1.5f)
-                        .padding(5.dp)
-                        .align(Alignment.CenterVertically)
+            )
 
-                )
+        }
 
-            }
+    }
+}
 
+@Composable
+fun GoogleMapView()
+{
+    val context = LocalContext.current
+    val mapView = remember {
+        MapView(context).apply {
+            onCreate(Bundle())
         }
     }
 
-    @Preview
-    @Composable
-    fun ActivityPreview()
-    {
-        LocationPage()
+    AndroidView(factory = { mapView }) { view ->
+        mapView.getMapAsync { googleMap ->
+            val location = LatLng(-34.0, 151.0)
+            googleMap.addMarker(MarkerOptions().position(location).title("Marker"))
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location, 10f))
+        }
     }
+
+    // Ensure lifecycle hooks are correctly forwarded to the MapView
+    val lifecycleObserver = rememberMapLifecycle(mapView)
+    val lifecycle = LocalLifecycleOwner.current.lifecycle
+    DisposableEffect(lifecycle) {
+        lifecycle.addObserver(lifecycleObserver)
+        onDispose {
+            lifecycle.removeObserver(lifecycleObserver)
+        }
+    }
+}
+
+
+@Composable
+fun rememberMapLifecycle(mapView: MapView): DefaultLifecycleObserver {
+    return remember {
+        object : DefaultLifecycleObserver {
+            override fun onResume(owner: LifecycleOwner) = mapView.onResume()
+            override fun onStart(owner: LifecycleOwner) = mapView.onStart()
+            override fun onStop(owner: LifecycleOwner) = mapView.onStop()
+            override fun onPause(owner: LifecycleOwner) = mapView.onPause()
+            override fun onDestroy(owner: LifecycleOwner) = mapView.onDestroy()
+            override fun onCreate(owner: LifecycleOwner) = mapView.onCreate(Bundle())
+        }
+    }
+}
+
+
+@Preview
+@Composable
+fun ActivityPreview()
+{
+    LocationPage()
+}
