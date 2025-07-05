@@ -169,7 +169,7 @@ fun GoogleMapView() {
                 try {
                     googleMap.isMyLocationEnabled = true
 
-                    // ✅ CENTER THE CAMERA ON USER LOCATION
+
                     val fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
                     fusedLocationClient.lastLocation.addOnSuccessListener { location ->
                         if (location != null) {
@@ -183,7 +183,7 @@ fun GoogleMapView() {
                 }
             } else {
                 // Optional fallback marker if location isn't available yet
-                val fallbackLocation = LatLng(-34.0, 151.0)
+                val fallbackLocation = LatLng(53.8, -1.59) //LBU Headingley
                 googleMap.addMarker(MarkerOptions().position(fallbackLocation).title("Default Marker"))
                 googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(fallbackLocation, 10f))
             }

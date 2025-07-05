@@ -1,4 +1,4 @@
-package com.example.productionproject
+package com.example.pp2025_reasses.pages
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -6,14 +6,11 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.CornerSize
-import androidx.compose.foundation.shape.RoundedCornerShape
+
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -31,13 +28,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.pp2025_reasses.R
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.example.pp2025_reasses.R
 
-class LoginActivityView {
-
-}
 
 @Composable
 fun LoginPage(onAuthentication: () -> Unit)
@@ -49,7 +43,7 @@ fun LoginPage(onAuthentication: () -> Unit)
 
     val context = LocalContext.current
     val prefs = remember { getEncryptedPrefs(context) }
-    var storedPassword = prefs.getString("password", null)
+    val storedPassword = prefs.getString("password", null)
     var inputPassword by remember { mutableStateOf("") }
     var errorText by remember { mutableStateOf("") }
 
@@ -85,7 +79,7 @@ fun LoginPage(onAuthentication: () -> Unit)
             Text(
                 text = if (isCreating) "Create a password you'll remember!" else "Enter Password",
                 textAlign = TextAlign.Justify,
-                fontSize = 25.sp,
+                fontSize = 20.sp,
                 lineHeight = 55.sp,
                 modifier = Modifier
                     .weight(0.2f)
@@ -117,7 +111,8 @@ fun LoginPage(onAuthentication: () -> Unit)
             )
 
             //Confirm Button
-            Button(onClick = {
+            Button(
+                onClick = {
                 if (isCreating) {
                     prefs.edit().putString("password", inputPassword).apply()
                     onAuthentication()
@@ -128,13 +123,22 @@ fun LoginPage(onAuthentication: () -> Unit)
                         errorText = "Incorrect password"
                     }
                 }
-            }) {
+                },
+                modifier = Modifier
+                    .fillMaxWidth(0.55f)
+                    .fillMaxSize(0.425f)
+
+            ) {
                 Text(
                     text = if (isCreating) "Save Password" else "Login",
                     modifier = Modifier
-                        .fillMaxWidth(0.55f)
-                        .fillMaxSize(0.425f)
-                        .padding()
+                        //.fillMaxWidth(0.55f)
+                        //.fillMaxSize(0.425f)
+                        .padding(horizontal = 10.dp)
+                        .align(Alignment.CenterVertically),
+                    textAlign = TextAlign.Center,
+                    fontSize = 27.sp,
+                    lineHeight = 32.sp,
                 )
             }
         }
@@ -165,5 +169,5 @@ fun getEncryptedPrefs(context: Context): SharedPreferences {
 @Composable
 fun LoginActivityPreview()
 {
-    LoginPage({})
+    LoginPage(){}
 }
