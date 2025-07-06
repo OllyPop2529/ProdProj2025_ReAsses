@@ -89,10 +89,7 @@ fun LocationPage(onSettingsClick: () -> Unit)
         {
             val buttonModifier : Modifier = Modifier
                 .padding(all = 25.dp)
-                //.fillMaxWidth(0.8f)
-                //.fillMaxHeight(0.4f)
                 .fillMaxSize()
-                //.weight(1f)
 
             NavigationButton(
                 onClick = onSettingsClick,

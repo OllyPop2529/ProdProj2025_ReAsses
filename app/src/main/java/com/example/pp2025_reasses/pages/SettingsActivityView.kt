@@ -13,6 +13,10 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.CornerSize
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.OutlinedButton
@@ -27,34 +31,96 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.pp2025_reasses.ATD_ViewModel
+import com.example.pp2025_reasses.R
 import com.example.pp2025_reasses.data.OptionData
 import com.example.pp2025_reasses.model.OptFeature
 import com.google.android.gms.maps.GoogleMap
 
 
 @Composable
-    fun SettingsPage(viewModel: ATD_ViewModel) {
+    fun SettingsPage(
+    viewModel: ATD_ViewModel,
+    onBack: () -> Unit
+    ) {
         //Empty Spacing for Padding, Will Contain Icon
         Scaffold(
             topBar = {},
         )
         { it ->
             //LazyColumn acting as page scrolling
-            LazyColumn(contentPadding = it)
+            Column(
+                modifier = Modifier.padding(it)
+            )
             {
-                item()
+
+
+                LazyColumn(
+                    modifier = Modifier.weight(6.5f),
+                    contentPadding = it,
+
+                )
                 {
-                    SectionBlock(
-                        title = "Maps",
-                        viewModel = viewModel,
-                        optionList = OptionData().loadGMaps()
-                    )
+                    item()
+                    {
+                        SectionBlock(
+                            title = "Maps",
+                            viewModel = viewModel,
+                            optionList = OptionData().loadGMaps()
+                        )
+                    }
+
+                    item()
+                    {
+                        SectionBlock(
+                            title = "Application",
+                            viewModel = viewModel,
+                            optionList = OptionData().loadTheme()
+                        )
+                    }
+                }
+
+                Column(
+                    verticalArrangement = Arrangement.Top,
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    modifier = Modifier
+                        .weight(1.5f)
+                        .padding(bottom = 15.dp)
+                        .alpha(0.5f)
+                        .background(Color.Red)
+                        .padding(horizontal = 15.dp)
+                        .fillMaxSize(),
+                )
+                {
+                    Button(
+                        onClick = { onBack() },
+                        shape = RoundedCornerShape(corner = CornerSize(10.dp)),
+                        elevation = ButtonDefaults.buttonElevation(5.dp,0.dp),
+                        modifier = Modifier
+                            .padding(all = 25.dp)
+                            .fillMaxSize(),
+
+
+                    ) {
+                        Text(
+                            text = "Return",
+                            modifier = Modifier
+                                //.fillMaxWidth(0.55f)
+                                //.fillMaxSize(0.425f)
+                                .padding(horizontal = 10.dp)
+                                .align(Alignment.CenterVertically),
+                            textAlign = TextAlign.Center,
+                            fontSize = 27.sp,
+                            lineHeight = 32.sp,
+                        )
+                    }
                 }
 
             }
@@ -74,7 +140,7 @@ import com.google.android.gms.maps.GoogleMap
         var isOpen by remember { mutableStateOf(true) }
 
         Column(
-            modifier = Modifier.background(Color.Red)
+            modifier = Modifier.padding(bottom = 5.dp)
         )
         {
             SectionHeader(
@@ -90,6 +156,8 @@ import com.google.android.gms.maps.GoogleMap
                         description = stringResource(option.description),
                         type = option.type,
                         onMapTypeChange = viewModel::setMapType,
+                        viewModel = viewModel
+
                     )
                 }
             }
@@ -112,7 +180,8 @@ import com.google.android.gms.maps.GoogleMap
             Row(
                 modifier = Modifier
                     .clickable { onSectionSelect() }
-                    .fillMaxWidth(0.3f)
+                    .background(Color.Red)
+                    .fillMaxWidth()
                     .padding(vertical = 10.dp, horizontal = 10.dp),
                 verticalAlignment = Alignment.Bottom,
                 horizontalArrangement = Arrangement.Start
@@ -121,6 +190,7 @@ import com.google.android.gms.maps.GoogleMap
                 //Title of the section
                 Text(
                     text = title,
+                    textAlign = TextAlign.Start
                 )
             }
             ////////////////////////////////////////////////////////
@@ -133,11 +203,13 @@ import com.google.android.gms.maps.GoogleMap
         description: String,
         type: Int,
         onMapTypeChange: (Int) -> Unit,
+        viewModel: ATD_ViewModel
     ) {
         //Surface - Added to apply color from theme (WIP)
         Surface(
             color = Color.LightGray,
-            modifier = Modifier.padding(bottom = 2.dp)
+            modifier = Modifier.padding(bottom = 2.dp),
+            shadowElevation = 2.dp
         )
         {
             //Section Block
@@ -181,8 +253,12 @@ import com.google.android.gms.maps.GoogleMap
                     2 -> {}
                     //Dropdown (For Map type)
                     3 -> {
-                        MapTypeDropdown(1)
-                        {} //ViewModel intergration
+                        MapTypeDropdown(
+                            selectedType = viewModel.getMapType(),
+                            modifier = modifier,
+                            onMapTypeChange = onMapTypeChange
+                        )
+
                     }
                 }
             }
@@ -191,31 +267,32 @@ import com.google.android.gms.maps.GoogleMap
         }
     }
 
-    @Composable
-    fun SettingInputField(condition: String?, modifier: Modifier) {
-        var data by remember { mutableStateOf("") }
-
-        TextField(
-            value = data,
-            onValueChange = { data = it },
-            label =
-            {
-                if (condition != null)
-                    condition
-                else
-                    ""
-            },
-            modifier = modifier
-                .padding(vertical = 10.dp, horizontal = 5.dp)
-        )
-    }
+//    @Composable
+//    fun SettingInputField(condition: String?, modifier: Modifier) {
+//        var data by remember { mutableStateOf("") }
+//
+//        TextField(
+//            value = data,
+//            onValueChange = { data = it },
+//            label =
+//            {
+//                if (condition != null)
+//                    condition
+//                else
+//                    ""
+//            },
+//            modifier = modifier
+//                .padding(vertical = 10.dp, horizontal = 5.dp)
+//        )
+//    }
 
 
 
     @Composable
     fun MapTypeDropdown(
         selectedType: Int,
-        onMapTypeChange: (Int) -> Unit
+        onMapTypeChange: (Int) -> Unit,
+        modifier: Modifier
     ) {
         val mapTypeOptions = mapOf(
             "Normal" to GoogleMap.MAP_TYPE_NORMAL,
@@ -231,7 +308,10 @@ import com.google.android.gms.maps.GoogleMap
             .padding(8.dp)
             .wrapContentSize(Alignment.TopStart)) {
 
-            OutlinedButton(onClick = { expanded = true }) {
+            OutlinedButton(
+                onClick = { expanded = true },
+                modifier = modifier
+            ) {
                 Text("Map Type: $currentLabel")
             }
 

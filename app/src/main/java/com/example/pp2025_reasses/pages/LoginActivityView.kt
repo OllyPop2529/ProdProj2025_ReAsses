@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -93,7 +94,7 @@ fun LoginPage(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = modifier
-                .weight(3.5f)
+                .weight(2.5f)
                 .padding(bottom = 15.dp)
                 .background(Color.Red),
         )
@@ -115,7 +116,8 @@ fun LoginPage(
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.55f)
-                    .fillMaxSize(0.425f)
+                    .fillMaxSize(0.425f),
+                elevation = ButtonDefaults.buttonElevation(5.dp,0.dp)
 
             ) {
                 Text(

@@ -25,6 +25,10 @@ class ATD_ViewModel(application: Application) : AndroidViewModel(application)
         _mapType.value = type
     }
 
+    fun getMapType(): Int {
+        return _mapType.value
+    }
+
     //Password
     private val sharedPrefs by lazy {
         val masterKey = MasterKey.Builder(context)

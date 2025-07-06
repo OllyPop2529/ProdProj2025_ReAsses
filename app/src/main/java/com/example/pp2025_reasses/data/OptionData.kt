@@ -7,7 +7,7 @@ class OptionData() {
     fun loadGMaps(): List<OptFeature> {
         return listOf<OptFeature>(
             OptFeature(R.string.gmT1, R.string.gmD1, 3),
-            OptFeature(R.string.gmT2, R.string.gmD2, 1),
+            //OptFeature(R.string.gmT2, R.string.gmD2, 1),
 
 
             )
