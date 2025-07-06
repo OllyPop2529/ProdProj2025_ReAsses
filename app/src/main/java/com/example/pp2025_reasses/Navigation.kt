@@ -2,6 +2,7 @@ package com.example.pp2025_reasses
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -32,7 +33,7 @@ import com.example.pp2025_reasses.pages.LoginPage
             ) {
 
                 composable(route = LocationTrackingApp.Login.name) {
-                    var isAuthenticated by rememberSaveable { mutableStateOf(false) }
+                    val isAuthenticated by viewModel.isAuthenticated.collectAsState()
                     if (isAuthenticated)
                     {
                         navController.navigate(LocationTrackingApp.Location.name)
@@ -52,7 +53,7 @@ import com.example.pp2025_reasses.pages.LoginPage
 
                 }
                 composable(route = LocationTrackingApp.Setting.name) {
-                    SettingsPage()
+                    SettingsPage(viewModel)
 
                 }
 
