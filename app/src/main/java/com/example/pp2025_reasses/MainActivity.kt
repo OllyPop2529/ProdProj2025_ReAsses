@@ -11,6 +11,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import com.example.pp2025_reasses.ui.theme.ActiveTheme
 import com.example.pp2025_reasses.ui.theme.PP2025_ReassesTheme
 
 class MainActivity : ComponentActivity() {
@@ -19,10 +20,17 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        val viewModel: ATD_ViewModel by viewModels()
+
 
         setContent {
-            val themeMode by viewModel.themeMode.collectAsState()
+            val viewModel: ATD_ViewModel by viewModels()
+            val isTheme by viewModel.isDark.collectAsState()
+
+            val themeMode = when {
+                isTheme -> ActiveTheme.DARK
+                viewModel.isContrast.collectAsState().value -> ActiveTheme.HIGH_CONTRAST
+                else -> ActiveTheme.LIGHT
+            }
 
             PP2025_ReassesTheme(themeMode = themeMode ) {
                 // A surface container using the 'background' color from the theme
