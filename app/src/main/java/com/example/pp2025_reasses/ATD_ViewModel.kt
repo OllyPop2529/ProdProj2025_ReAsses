@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.lifecycle.AndroidViewModel
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
+import com.example.pp2025_reasses.ui.theme.ActiveTheme
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -100,5 +101,13 @@ class ATD_ViewModel(application: Application) : AndroidViewModel(application) {
 
     fun getUserLocation(): String {
         return _userLocation.value.toString()
+    }
+
+    //Theme
+    private val _themeMode = MutableStateFlow(ActiveTheme.LIGHT)
+    val themeMode: StateFlow<ActiveTheme> = _themeMode
+
+    fun setThemeMode(mode: ActiveTheme) {
+        _themeMode.value = mode
     }
 }
