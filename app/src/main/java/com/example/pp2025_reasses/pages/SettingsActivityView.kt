@@ -21,6 +21,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -31,6 +32,7 @@ import androidx.compose.ui.unit.dp
         //Empty Spacing for Padding, Will Contain Icon
         Scaffold(
             topBar = {},
+            containerColor = Color.Red
         )
         { it ->
             //LazyColumn acting as page scrolling
@@ -96,14 +98,9 @@ import androidx.compose.ui.unit.dp
                 Text(
                     text = title,
                 )
-
-
             }
-
-
             ////////////////////////////////////////////////////////
         }
-
     }
 
     @Composable
@@ -116,8 +113,6 @@ import androidx.compose.ui.unit.dp
         //Surface - Added to apply color from theme (WIP)
         Surface()
         {
-
-
             //Section Block
             Row(
                 modifier = Modifier
