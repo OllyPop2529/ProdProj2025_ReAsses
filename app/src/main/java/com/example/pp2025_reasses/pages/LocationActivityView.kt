@@ -47,7 +47,7 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 
 @Composable
-fun LocationPage()
+fun LocationPage(onSettingsClick: () -> Unit)
 {
     val modifier : Modifier = Modifier
         .padding(horizontal = 15.dp)
@@ -94,7 +94,7 @@ fun LocationPage()
                 //.weight(1f)
 
             NavigationButton(
-                onClick = {},
+                onClick = onSettingsClick,
                 modifier = buttonModifier,
                 text = "Settings",
                 image = R.drawable.setting)
@@ -247,5 +247,5 @@ fun rememberMapLifecycle(mapView: MapView): DefaultLifecycleObserver {
 @Composable
 fun ActivityPreview()
 {
-    LocationPage()
+    LocationPage(){}
 }
