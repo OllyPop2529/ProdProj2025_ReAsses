@@ -8,6 +8,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -19,11 +20,11 @@ import com.example.pp2025_reasses.pages.LoginPage
 
     @Composable
     fun AppNavigation(
-        //viewModel: OrderViewModel = viewModel(),
+        viewModel: ATD_ViewModel = viewModel(),
         navController: NavHostController = rememberNavController()
     )
     {
-            //val uiState by viewModel.uiState.collectAsState()
+
             NavHost(
                 navController = navController,
                 startDestination = LocationTrackingApp.Login.name,
@@ -38,7 +39,8 @@ import com.example.pp2025_reasses.pages.LoginPage
                     }
                     else{
                         LoginPage(
-                            onAuthentication = { isAuthenticated = true }
+                            onLogin = { viewModel.checkPassword(it) },
+                            onFirst = { viewModel.savePassword(it) }
                         )
                     }
                 }

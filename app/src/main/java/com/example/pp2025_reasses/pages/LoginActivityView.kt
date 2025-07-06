@@ -1,7 +1,5 @@
 package com.example.pp2025_reasses.pages
 
-import android.content.Context
-import android.content.SharedPreferences
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -9,7 +7,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -22,32 +19,29 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.security.crypto.EncryptedSharedPreferences
-import androidx.security.crypto.MasterKey
 import com.example.pp2025_reasses.R
 
 
 @Composable
-fun LoginPage(onAuthentication: () -> Unit)
+fun LoginPage(
+    onLogin: (String) -> Unit,
+    onFirst: (String) -> Unit,
+)
 {
     val modifier : Modifier = Modifier
         .padding(horizontal = 15.dp)
         .fillMaxSize()
         .alpha(0.5f)
 
-    val context = LocalContext.current
-    val prefs = remember { getEncryptedPrefs(context) }
-    val storedPassword = prefs.getString("password", null)
     var inputPassword by remember { mutableStateOf("") }
     var errorText by remember { mutableStateOf("") }
 
-    val isCreating = storedPassword == null
+    var isCreating by remember { mutableStateOf(false)}
 
     Column(
         modifier = Modifier.fillMaxSize()
@@ -113,16 +107,8 @@ fun LoginPage(onAuthentication: () -> Unit)
             //Confirm Button
             Button(
                 onClick = {
-                if (isCreating) {
-                    prefs.edit().putString("password", inputPassword).apply()
-                    onAuthentication()
-                } else {
-                    if (inputPassword == storedPassword) {
-                        onAuthentication()
-                    } else {
-                        errorText = "Incorrect password"
-                    }
-                }
+                if (isCreating) { onFirst(inputPassword) }
+                else { onLogin(inputPassword) }
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.55f)
@@ -149,19 +135,6 @@ fun LoginPage(onAuthentication: () -> Unit)
 
 }
 
-fun getEncryptedPrefs(context: Context): SharedPreferences {
-    val masterKey = MasterKey.Builder(context)
-        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-        .build()
-
-    return EncryptedSharedPreferences.create(
-        context,
-        "secure_prefs",
-        masterKey,
-        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-    )
-}
 
 
 
@@ -169,5 +142,8 @@ fun getEncryptedPrefs(context: Context): SharedPreferences {
 @Composable
 fun LoginActivityPreview()
 {
-    LoginPage(){}
+    LoginPage(
+        onLogin = { },
+        onFirst = { }
+    )
 }
