@@ -6,4 +6,17 @@
     <string name="save_password">Save Password</string>
     <string name="login">Login</string>
     <string name="settings_button">Settings</string>
+
+    <string name="themeT1">Dark Theme</string>
+    <string name="themeD1">Toggles a darker theme. Decreased Contrast, Decreased Opacity</string>
+    <string name="themeD2">Enables High Contrast. Flips most colors by 180 hue. Increases Alpha</string>
+    <string name="themeT2">High Contrast Theme</string>
+    <string name="themeD3">Increase font size, and changes all text font to comic sans</string>
+    <string name="themeT3">Legible Font</string>
+
+    <string name="gmT1">Map Type</string>
+    <string name="gmD1">Select the type of display you would like the map to use.</string>
+    <string name="gmT2">Legible Font</string>
+    <string name="gmD2">Legible Font</string>
+
 </resources>
