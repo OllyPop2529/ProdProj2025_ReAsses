@@ -1,7 +1,6 @@
 package com.example.pp2025_reasses.ui.theme
 
 import android.os.Build
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
@@ -25,23 +24,36 @@ val LightColorScheme = lightColorScheme(
     onBackground = Color.White
 )
 
+//Not Functional Yet
+val HighContrastColorScheme = lightColorScheme(
+    primary = Color(227, 78, 48) ,
+    onPrimary = Color.White,
+    background = Color.White,
+    onBackground = Color.White
+)
+
 
 
 @Composable
 fun PP2025_ReassesTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
+    themeMode: ActiveTheme,
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit
 ) {
-    val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+    val context = LocalContext.current
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+    val colorScheme = when (themeMode) {
+        ActiveTheme.DARK -> {
+            if (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                dynamicDarkColorScheme(context)
+            } else DarkColorScheme
+        }
+        ActiveTheme.HIGH_CONTRAST -> HighContrastColorScheme
+        ActiveTheme.LIGHT -> {
+            if (dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+                dynamicLightColorScheme(context)
+            } else LightColorScheme
+        }
     }
 
     MaterialTheme(

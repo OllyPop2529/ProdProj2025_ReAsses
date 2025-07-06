@@ -1,7 +1,6 @@
 package com.example.pp2025_reasses.pages
 
 
-import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -56,7 +55,7 @@ import com.google.android.gms.maps.GoogleMap
         Scaffold(
             topBar = {},
         )
-        { it ->
+        {
             //LazyColumn acting as page scrolling
             Column(
                 modifier = Modifier.padding(it)

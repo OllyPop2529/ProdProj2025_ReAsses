@@ -74,10 +74,10 @@ fun LocationPage(
         // Contains Connection Prompt / Device status
         Column(
             modifier = modifier
+                .alpha(1f)
                 .weight(8f)
                 .padding(top = 15.dp)
                 .background(Color.LightGray)
-                .alpha(1f)
         )
         {
             Box()
