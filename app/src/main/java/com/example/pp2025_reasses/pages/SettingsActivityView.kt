@@ -16,9 +16,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
@@ -33,7 +35,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -94,8 +95,7 @@ import com.google.android.gms.maps.GoogleMap
                     modifier = Modifier
                         .weight(1.5f)
                         .padding(bottom = 15.dp)
-                        .alpha(0.5f)
-                        .background(Color.Red)
+                        .background(MaterialTheme.colorScheme.primary)
                         .padding(horizontal = 15.dp)
                         .fillMaxSize(),
                 )
@@ -107,6 +107,12 @@ import com.google.android.gms.maps.GoogleMap
                         modifier = Modifier
                             .padding(all = 25.dp)
                             .fillMaxSize(),
+                        colors = ButtonColors(
+                            containerColor = Color(54, 84, 100),
+                            contentColor = Color.White,
+                            disabledContainerColor = Color(59, 89, 105),
+                            disabledContentColor = Color.LightGray
+                        )
 
 
                     ) {
@@ -180,10 +186,9 @@ import com.google.android.gms.maps.GoogleMap
             Row(
                 modifier = Modifier
                     .clickable { onSectionSelect() }
-                    .alpha(0.5f)
-                    .background(Color.Red)
+                    .background(MaterialTheme.colorScheme.primary)
                     .fillMaxWidth()
-                    .padding(vertical = 10.dp, horizontal = 10.dp),
+                    .padding(vertical = 10.dp, horizontal = 5.dp),
                 verticalAlignment = Alignment.Bottom,
                 horizontalArrangement = Arrangement.Start
             )
@@ -192,7 +197,7 @@ import com.google.android.gms.maps.GoogleMap
                 Text(
                     text = title,
                     textAlign = TextAlign.Start,
-                    color = Color.White
+                    color = MaterialTheme.colorScheme.onPrimary
                 )
             }
             ////////////////////////////////////////////////////////
@@ -210,7 +215,7 @@ import com.google.android.gms.maps.GoogleMap
     ) {
         //Surface - Added to apply color from theme (WIP)
         Surface(
-            color = Color.LightGray,
+            color = MaterialTheme.colorScheme.onBackground,
             modifier = Modifier.padding(bottom = 2.dp),
             shadowElevation = 2.dp
         )
@@ -234,7 +239,8 @@ import com.google.android.gms.maps.GoogleMap
                     Text(
                         text = descriptionName,
                         textAlign = TextAlign.Start,
-                        modifier = Modifier
+                        modifier = Modifier,
+                        color = MaterialTheme.colorScheme.tertiary
 
                     )
 
@@ -242,7 +248,8 @@ import com.google.android.gms.maps.GoogleMap
                     Text(
                         text = description,
                         textAlign = TextAlign.Start,
-                        modifier = Modifier
+                        modifier = Modifier,
+                        color = MaterialTheme.colorScheme.tertiary
 
                     )
                 }
@@ -307,10 +314,12 @@ import com.google.android.gms.maps.GoogleMap
             },
             modifier = modifier,
             colors = SwitchDefaults.colors(
+                checkedBorderColor = Color.Gray,
                 checkedTrackColor = Color.Green,
                 checkedThumbColor = Color.White,
                 uncheckedThumbColor = Color.White,
-                uncheckedTrackColor = Color.Red
+                uncheckedTrackColor = Color.Red,
+                uncheckedBorderColor = Color.Gray
             )
         )
     }

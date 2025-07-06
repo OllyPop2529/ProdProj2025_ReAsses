@@ -80,7 +80,8 @@ fun LoginPage(
                 lineHeight = 55.sp,
                 modifier = Modifier
                     .weight(0.2f)
-                    .padding(vertical = 40.dp)
+                    .padding(vertical = 40.dp),
+                color = MaterialTheme.colorScheme.tertiary
 
 
             )
