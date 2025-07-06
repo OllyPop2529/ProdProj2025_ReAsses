@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -71,7 +72,9 @@ fun LoginPage(
 
             //First Time Prompt
             Text(
-                text = if (isCreating) "Create a password you'll remember!" else "Enter Password",
+                text =
+                if (isCreating) stringResource(R.string.first_time)
+                else stringResource(R.string.enter_password),
                 textAlign = TextAlign.Justify,
                 fontSize = 20.sp,
                 lineHeight = 55.sp,
@@ -116,7 +119,9 @@ fun LoginPage(
 
             ) {
                 Text(
-                    text = if (isCreating) "Save Password" else "Login",
+                    text =
+                    if (isCreating) stringResource(R.string.save_password)
+                    else stringResource(R.string.login),
                     modifier = Modifier
                         //.fillMaxWidth(0.55f)
                         //.fillMaxSize(0.425f)

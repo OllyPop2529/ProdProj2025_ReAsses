@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">PP2025_Reasses</string>
     <string name="title_activity_maps">MapsActivity</string>
+    <string name="first_time">Create a password you\'ll remember!</string>
+    <string name="enter_password">Enter Password</string>
+    <string name="save_password">Save Password</string>
+    <string name="login">Login</string>
+    <string name="settings_button">Settings</string>
 </resources>

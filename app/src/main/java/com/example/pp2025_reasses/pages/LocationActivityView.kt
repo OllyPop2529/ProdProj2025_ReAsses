@@ -38,6 +38,7 @@ import android.Manifest
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import com.example.pp2025_reasses.R
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -96,7 +97,7 @@ fun LocationPage(onSettingsClick: () -> Unit)
             NavigationButton(
                 onClick = onSettingsClick,
                 modifier = buttonModifier,
-                text = "Settings",
+                text = stringResource(R.string.settings_button),
                 image = R.drawable.setting)
         }
         ////////////////////////////////////////////////////////
@@ -162,7 +163,7 @@ fun GoogleMapView() {
         permissionGranted = true
     }
 
-    AndroidView(factory = { mapView }) { view ->
+    AndroidView(factory = { mapView }) { _ ->
         mapView.getMapAsync { googleMap ->
 
             if (permissionGranted) {
@@ -247,5 +248,5 @@ fun rememberMapLifecycle(mapView: MapView): DefaultLifecycleObserver {
 @Composable
 fun ActivityPreview()
 {
-    LocationPage(){}
+    LocationPage({})
 }
