@@ -3,13 +3,18 @@ package com.example.pp2025_reasses.pages
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -25,9 +30,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.android.gms.maps.GoogleMap
 
 
-    @Composable
+@Composable
     fun SettingsPage() {
         //Empty Spacing for Padding, Will Contain Icon
         Scaffold(
@@ -148,9 +154,14 @@ import androidx.compose.ui.unit.dp
                 val modifier: Modifier = Modifier.weight(0.3f)
                 //Setting Input Type
                 when (type) {
-                    //Input Box
-                    1 -> {
-                        SettingInputField(condition, modifier)
+                    //Button
+                    1 -> {}
+                    //Toggle
+                    2 -> {}
+                    //Dropdown (For Map type)
+                    3 -> {
+                        MapTypeDropdown(1)
+                        {} //ViewModel intergration
                     }
                 }
             }
@@ -179,11 +190,50 @@ import androidx.compose.ui.unit.dp
     }
 
 
+
+    @Composable
+    fun MapTypeDropdown(
+        selectedType: Int,
+        onMapTypeChange: (Int) -> Unit
+    ) {
+        val mapTypeOptions = mapOf(
+            "Normal" to GoogleMap.MAP_TYPE_NORMAL,
+            "Satellite" to GoogleMap.MAP_TYPE_SATELLITE,
+            "Terrain" to GoogleMap.MAP_TYPE_TERRAIN,
+            "Hybrid" to GoogleMap.MAP_TYPE_HYBRID
+        )
+
+        var expanded by remember { mutableStateOf(false) }
+        val currentLabel = mapTypeOptions.entries.first { it.value == selectedType }.key
+
+        Box(modifier = Modifier
+            .padding(8.dp)
+            .wrapContentSize(Alignment.TopStart)) {
+
+            OutlinedButton(onClick = { expanded = true }) {
+                Text("Map Type: $currentLabel")
+            }
+
+            DropdownMenu(
+                expanded = expanded,
+                onDismissRequest = { expanded = false }
+            ) {
+                mapTypeOptions.forEach { (label, type) ->
+                    DropdownMenuItem(
+                        text = { Text(label) },
+                        onClick = {
+                            onMapTypeChange(type)
+                            expanded = false
+                        }
+                    )
+                }
+            }
+        }
+    }
+
     @Preview(showBackground = true)
     @Composable
     private fun SettingPagePreview() {
-
-
     }
 
 
