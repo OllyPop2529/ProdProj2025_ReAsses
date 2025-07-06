@@ -16,7 +16,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -28,7 +30,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -61,8 +62,6 @@ fun LocationPage(
 {
     val modifier : Modifier = Modifier
         .fillMaxSize()
-        .alpha(0.5f)
-
 
 
     Column(
@@ -74,10 +73,9 @@ fun LocationPage(
         // Contains Connection Prompt / Device status
         Column(
             modifier = modifier
-                .alpha(1f)
                 .weight(8f)
                 .padding(top = 15.dp)
-                .background(Color.LightGray)
+                .background(MaterialTheme.colorScheme.background)
         )
         {
             Box()
@@ -91,7 +89,7 @@ fun LocationPage(
                     textDecoration = TextDecoration.Underline,
                     fontWeight = FontWeight.Bold,
                     fontSize = 22.sp,
-                    color = Color.Red,
+                    color = MaterialTheme.colorScheme.primary,
                     modifier = Modifier
                         .fillMaxHeight(0.1f)
                         .align(Alignment.BottomCenter)
@@ -110,7 +108,7 @@ fun LocationPage(
             modifier = modifier
                 .weight(2f)
                 .padding(bottom = 15.dp)
-                .background(Color.Red)
+                .background(MaterialTheme.colorScheme.primary)
 
         )
         {
@@ -140,7 +138,13 @@ fun NavigationButton(
         onClick = { onClick() },
         shape = RoundedCornerShape(corner = CornerSize(10.dp)),
         modifier = modifier,
-        elevation = ButtonDefaults.buttonElevation(5.dp,0.dp)
+        elevation = ButtonDefaults.buttonElevation(5.dp,0.dp),
+        colors = ButtonColors(
+            containerColor = Color(54, 84, 100),
+            contentColor = Color.White,
+            disabledContainerColor = Color(59, 89, 105),
+            disabledContentColor = Color.LightGray
+        )
     )
     {
         Row(
