@@ -58,6 +58,7 @@ dependencies {
     implementation(libs.play.services.maps.v1700)
     implementation(libs.play.services.location)
     implementation(libs.androidx.security.crypto.v110alpha06)
+    implementation(libs.androidx.navigation.runtime.android)
     androidTestImplementation(platform(libs.androidx.compose.bom.v20230501))
     androidTestImplementation(libs.ui.test.junit4)
     androidTestImplementation(libs.androidx.navigation.testing)

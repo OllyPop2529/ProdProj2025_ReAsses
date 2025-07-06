@@ -173,7 +173,6 @@ import com.google.android.gms.maps.GoogleMap
         modifier: Modifier
 
     ) {
-        //Surface - Added to apply color from theme (WIP)
         Surface()
         {
 

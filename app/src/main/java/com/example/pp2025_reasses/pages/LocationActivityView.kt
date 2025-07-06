@@ -35,10 +35,12 @@ import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import android.Manifest
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.res.stringResource
+import com.example.pp2025_reasses.ATD_ViewModel
 import com.example.pp2025_reasses.R
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -48,10 +50,12 @@ import com.google.android.gms.maps.model.MarkerOptions
 
 
 @Composable
-fun LocationPage(onSettingsClick: () -> Unit)
+fun LocationPage(
+    onSettingsClick: () -> Unit,
+    viewModel: ATD_ViewModel
+)
 {
     val modifier : Modifier = Modifier
-        .padding(horizontal = 15.dp)
         .fillMaxSize()
         .alpha(0.5f)
 
@@ -68,10 +72,11 @@ fun LocationPage(onSettingsClick: () -> Unit)
             modifier = modifier
                 .weight(8f)
                 .padding(top = 15.dp)
-                .background(Color.LightGray),
+                .background(Color.LightGray)
+                .alpha(1f)
         )
         {
-            GoogleMapView()
+            GoogleMapView(viewModel)
         }
 
 
@@ -145,13 +150,17 @@ fun NavigationButton(
 }
 
 @Composable
-fun GoogleMapView() {
+fun GoogleMapView(
+    viewModel: ATD_ViewModel
+) {
     val context = LocalContext.current
     val mapView = remember {
         MapView(context).apply {
             onCreate(Bundle())
         }
     }
+
+    val mapType by viewModel.mapType.collectAsState()
 
     var permissionGranted by remember { mutableStateOf(false) }
 
@@ -162,6 +171,7 @@ fun GoogleMapView() {
 
     AndroidView(factory = { mapView }) { _ ->
         mapView.getMapAsync { googleMap ->
+            googleMap.mapType = mapType
 
             if (permissionGranted) {
                 try {
@@ -245,5 +255,5 @@ fun rememberMapLifecycle(mapView: MapView): DefaultLifecycleObserver {
 @Composable
 fun ActivityPreview()
 {
-    LocationPage({})
+
 }

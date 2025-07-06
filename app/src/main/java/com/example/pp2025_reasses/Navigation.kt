@@ -48,7 +48,8 @@ import com.example.pp2025_reasses.pages.LoginPage
 
                 composable(route = LocationTrackingApp.Location.name) {
                     LocationPage(
-                        onSettingsClick = { navController.navigate(LocationTrackingApp.Setting.name)}
+                        onSettingsClick = {navController.navigate(LocationTrackingApp.Setting.name)},
+                        viewModel = viewModel
                     )
 
                 }

@@ -36,7 +36,6 @@ fun LoginPage(
 )
 {
     val modifier : Modifier = Modifier
-        .padding(horizontal = 15.dp)
         .fillMaxSize()
         .alpha(0.5f)
 
@@ -116,7 +115,7 @@ fun LoginPage(
                 },
                 modifier = Modifier
                     .fillMaxWidth(0.55f)
-                    .fillMaxSize(0.425f),
+                    .fillMaxSize(0.675f),
                 elevation = ButtonDefaults.buttonElevation(5.dp,0.dp)
 
             ) {
