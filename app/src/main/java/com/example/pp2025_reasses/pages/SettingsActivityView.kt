@@ -1,6 +1,7 @@
 package com.example.pp2025_reasses.pages
 
 
+import android.annotation.SuppressLint
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,9 +23,11 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.Switch
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,7 +42,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pp2025_reasses.ATD_ViewModel
-import com.example.pp2025_reasses.R
 import com.example.pp2025_reasses.data.OptionData
 import com.example.pp2025_reasses.model.OptFeature
 import com.google.android.gms.maps.GoogleMap
@@ -179,6 +181,7 @@ import com.google.android.gms.maps.GoogleMap
             Row(
                 modifier = Modifier
                     .clickable { onSectionSelect() }
+                    .alpha(0.5f)
                     .background(Color.Red)
                     .fillMaxWidth()
                     .padding(vertical = 10.dp, horizontal = 10.dp),
@@ -189,12 +192,14 @@ import com.google.android.gms.maps.GoogleMap
                 //Title of the section
                 Text(
                     text = title,
-                    textAlign = TextAlign.Start
+                    textAlign = TextAlign.Start,
+                    color = Color.White
                 )
             }
             ////////////////////////////////////////////////////////
         }
     }
+
 
     @Composable
     fun OptionBlock(
@@ -244,12 +249,35 @@ import com.google.android.gms.maps.GoogleMap
                 }
 
                 val modifier: Modifier = Modifier.weight(0.3f)
+
+                //Hashmap to work out which option to update
+                val whichOption = mapOf(
+                    "Dark Theme" to viewModel.isDark,
+                    "High Contrast Theme" to viewModel.isContrast,
+                    "Legible Font" to viewModel.isClarity,
+                )
+                val currentSetting = whichOption[descriptionName]
+
+
                 //Setting Input Type
                 when (type) {
                     //Button
                     1 -> {}
                     //Toggle
-                    2 -> {}
+                    2 -> if (currentSetting != null) {
+                        val toggleState by currentSetting.collectAsState()
+                        ToggleSlider(
+                            buttonState = toggleState,
+                            updateState = {
+                                when (currentSetting) {
+                                    viewModel.isDark -> viewModel.setDark(it)
+                                    viewModel.isContrast -> viewModel.setContrast(it)
+                                    viewModel.isClarity -> viewModel.setClarity(it)
+                                }
+                            },
+                            modifier = modifier
+                        )
+                    }
                     //Dropdown (For Map type)
                     3 -> {
                         MapTypeDropdown(
@@ -266,26 +294,27 @@ import com.google.android.gms.maps.GoogleMap
         }
     }
 
-//    @Composable
-//    fun SettingInputField(condition: String?, modifier: Modifier) {
-//        var data by remember { mutableStateOf("") }
-//
-//        TextField(
-//            value = data,
-//            onValueChange = { data = it },
-//            label =
-//            {
-//                if (condition != null)
-//                    condition
-//                else
-//                    ""
-//            },
-//            modifier = modifier
-//                .padding(vertical = 10.dp, horizontal = 5.dp)
-//        )
-//    }
 
-
+    @Composable
+    fun ToggleSlider(
+        buttonState: Boolean,
+        updateState: (Boolean) -> Unit,
+        modifier: Modifier
+    ) {
+        Switch(
+            checked = buttonState,
+            onCheckedChange = { newValue ->
+                updateState(newValue)  // Correctly pass updated state
+            },
+            modifier = modifier,
+            colors = SwitchDefaults.colors(
+                checkedTrackColor = Color.Green,
+                checkedThumbColor = Color.White,
+                uncheckedThumbColor = Color.White,
+                uncheckedTrackColor = Color.Red
+            )
+        )
+    }
 
     @Composable
     fun MapTypeDropdown(

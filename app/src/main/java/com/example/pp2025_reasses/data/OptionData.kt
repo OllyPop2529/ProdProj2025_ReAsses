@@ -15,9 +15,9 @@ class OptionData() {
 
     fun loadTheme(): List<OptFeature> {
         return listOf<OptFeature>(
-            OptFeature(R.string.themeT1, R.string.themeD1, 1),
-            OptFeature(R.string.themeT2, R.string.themeD2, 1),
-            OptFeature(R.string.themeT3, R.string.themeD3, 1),
+            OptFeature(R.string.themeT1, R.string.themeD1, 2),
+            OptFeature(R.string.themeT2, R.string.themeD2, 2),
+            OptFeature(R.string.themeT3, R.string.themeD3, 2),
 
             )
     }

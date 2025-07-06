@@ -9,8 +9,7 @@ import com.google.android.gms.maps.GoogleMap
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class ATD_ViewModel(application: Application) : AndroidViewModel(application)
-{
+class ATD_ViewModel(application: Application) : AndroidViewModel(application) {
     private val context: Context = application.applicationContext
 
     //Authentication completion
@@ -50,8 +49,43 @@ class ATD_ViewModel(application: Application) : AndroidViewModel(application)
             _isAuthenticated.value = true
         }
     }
+
     fun savePassword(password: String) {
         sharedPrefs.edit().putString("password", password).apply()
         _isAuthenticated.value = true
+    }
+
+    //Settings
+    private val _isDark = MutableStateFlow(false)
+    val isDark: StateFlow<Boolean> = _isDark
+
+    fun getDark(): Boolean {
+        return _isDark.value
+    }
+
+    fun setDark(bool: Boolean) {
+        _isDark.value = bool
+    }
+
+    private val _isContrast = MutableStateFlow(false)
+    val isContrast: StateFlow<Boolean> = _isContrast
+
+    fun getContrast(): Boolean {
+        return _isContrast.value
+    }
+
+    fun setContrast(bool: Boolean) {
+        _isContrast.value = bool
+    }
+
+    private val _isClarity = MutableStateFlow(false)
+    val isClarity: StateFlow<Boolean> = _isClarity
+
+    fun getClarity(): Boolean {
+        return _isClarity.value
+    }
+
+    fun setClarity(bool: Boolean) {
+        _isClarity.value = bool
     }
 }
