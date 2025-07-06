@@ -6,6 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -87,5 +88,17 @@ class ATD_ViewModel(application: Application) : AndroidViewModel(application) {
 
     fun setClarity(bool: Boolean) {
         _isClarity.value = bool
+    }
+
+    //LocationActivity
+    private val _userLocation = MutableStateFlow<LatLng?>(null)
+    val userLocation: StateFlow<LatLng?> = _userLocation
+
+    fun updateUserLocation(latLng: LatLng) {
+        _userLocation.value = latLng
+    }
+
+    fun getUserLocation(): String {
+        return _userLocation.value.toString()
     }
 }
