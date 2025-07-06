@@ -26,7 +26,7 @@ val LightColorScheme = lightColorScheme(
 
 //Not Functional Yet
 val HighContrastColorScheme = lightColorScheme(
-    primary = Color(227, 78, 48) ,
+    primary = Color(238, 81, 49, 255),
     onPrimary = Color.White,
     background = Color.White,
     onBackground = Color.White
@@ -37,7 +37,7 @@ val HighContrastColorScheme = lightColorScheme(
 @Composable
 fun PP2025_ReassesTheme(
     themeMode: ActiveTheme,
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val context = LocalContext.current

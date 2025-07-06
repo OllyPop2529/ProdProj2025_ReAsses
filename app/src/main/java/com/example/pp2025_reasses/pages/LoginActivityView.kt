@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -18,7 +20,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -27,6 +28,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pp2025_reasses.R
+import com.example.pp2025_reasses.ui.theme.ActiveTheme
 
 
 @Composable
@@ -35,9 +37,6 @@ fun LoginPage(
     onFirst: (String) -> Unit,
 )
 {
-    val modifier : Modifier = Modifier
-        .fillMaxSize()
-        .alpha(0.5f)
 
     var inputPassword by remember { mutableStateOf("") }
     var errorText by remember { mutableStateOf("") }
@@ -52,17 +51,18 @@ fun LoginPage(
         // Top 2/3
         // Contains Icon and First Time Welcome Text
         Column(
-            modifier = modifier
+            modifier = Modifier
+                .fillMaxSize()
                 .weight(6.5f)
                 .padding(top = 15.dp)
-                .background(Color.LightGray),
+                .background(MaterialTheme.colorScheme.background),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceBetween
         )
         {
             //Application Icon
             Image(
-                painter = painterResource(R.drawable.ic_launcher_background),
+                painter = painterResource(R.drawable.tether),
                 contentDescription = "Application Icon",
                 modifier = Modifier
                     .fillMaxSize()
@@ -80,7 +80,7 @@ fun LoginPage(
                 lineHeight = 55.sp,
                 modifier = Modifier
                     .weight(0.2f)
-                    .padding(vertical = 10.dp)
+                    .padding(vertical = 40.dp)
 
 
             )
@@ -92,10 +92,11 @@ fun LoginPage(
         Column(
             verticalArrangement = Arrangement.Top,
             horizontalAlignment = Alignment.CenterHorizontally,
-            modifier = modifier
+            modifier = Modifier
+                .fillMaxSize()
                 .weight(2.5f)
                 .padding(bottom = 15.dp)
-                .background(Color.Red),
+                .background(MaterialTheme.colorScheme.primary),
         )
         {
             //Password Field
@@ -116,7 +117,13 @@ fun LoginPage(
                 modifier = Modifier
                     .fillMaxWidth(0.55f)
                     .fillMaxSize(0.675f),
-                elevation = ButtonDefaults.buttonElevation(5.dp,0.dp)
+                elevation = ButtonDefaults.buttonElevation(5.dp,0.dp),
+                colors = ButtonColors(
+                    containerColor = Color(54, 84, 100),
+                    contentColor = Color.White,
+                    disabledContainerColor = Color(59, 89, 105),
+                    disabledContentColor = Color.LightGray
+                )
 
             ) {
                 Text(
@@ -131,6 +138,7 @@ fun LoginPage(
                     textAlign = TextAlign.Center,
                     fontSize = 27.sp,
                     lineHeight = 32.sp,
+
                 )
             }
         }
