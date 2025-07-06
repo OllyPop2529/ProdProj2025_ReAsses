@@ -1,6 +1,7 @@
 package com.example.pp2025_reasses.pages
 
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -27,26 +28,33 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.example.pp2025_reasses.ATD_ViewModel
+import com.example.pp2025_reasses.data.OptionData
+import com.example.pp2025_reasses.model.OptFeature
 import com.google.android.gms.maps.GoogleMap
 
 
 @Composable
-    fun SettingsPage() {
+    fun SettingsPage(viewModel: ATD_ViewModel) {
         //Empty Spacing for Padding, Will Contain Icon
         Scaffold(
             topBar = {},
-            containerColor = Color.Red
         )
         { it ->
             //LazyColumn acting as page scrolling
             LazyColumn(contentPadding = it)
             {
-                items(5)
+                item()
                 {
-                    SectionBlock()
+                    SectionBlock(
+                        title = "Maps",
+                        viewModel = viewModel,
+                        optionList = OptionData().loadGMaps()
+                    )
                 }
 
             }
@@ -56,22 +64,34 @@ import com.google.android.gms.maps.GoogleMap
 
 
     @Composable
-    fun SectionBlock() {
+    fun SectionBlock(
+        optionList: List<OptFeature>,
+        title: String,
+        viewModel: ATD_ViewModel
+
+    ) {
         // Keeps section Open/Close
         var isOpen by remember { mutableStateOf(true) }
 
-        Column()
+        Column(
+            modifier = Modifier.background(Color.Red)
+        )
         {
             SectionHeader(
-                title = "Bluetooth Test",
+                title = title,
                 isOpen = isOpen,
                 onSectionSelect = { isOpen = !isOpen },
                 modifier = Modifier
             )
             if (isOpen) {
-                OptionBlock("Connectivity", "ABC", 1, null)
-                OptionBlock("Speedivity", "24124", 1, null)
-                OptionBlock("Magical Capability", "100%", 1, null)
+                for (option: OptFeature in optionList) {
+                    OptionBlock(
+                        descriptionName = stringResource(option.name),
+                        description = stringResource(option.description),
+                        type = option.type,
+                        onMapTypeChange = viewModel::setMapType,
+                    )
+                }
             }
         }
     }
@@ -86,9 +106,7 @@ import com.google.android.gms.maps.GoogleMap
 
     ) {
         //Surface - Added to apply color from theme (WIP)
-        Surface(
-
-        )
+        Surface()
         {
 
             Row(
@@ -114,10 +132,13 @@ import com.google.android.gms.maps.GoogleMap
         descriptionName: String,
         description: String,
         type: Int,
-        condition: String?,
+        onMapTypeChange: (Int) -> Unit,
     ) {
         //Surface - Added to apply color from theme (WIP)
-        Surface()
+        Surface(
+            color = Color.LightGray,
+            modifier = Modifier.padding(bottom = 2.dp)
+        )
         {
             //Section Block
             Row(
@@ -237,10 +258,17 @@ import com.google.android.gms.maps.GoogleMap
     }
 
 
-    @Preview(showBackground = true)
-    @Composable
-    fun DropDownPreview() {
-        SectionBlock()
-
-    }
+//    @Preview(showBackground = true)
+//    @Composable
+//    fun DropDownPreview() {
+//
+//        val viewModel : (Int) -> ();
+//
+//        SectionBlock(
+//            title = "Maps",
+//            viewModel = viewModel,
+//            optionList = OptionData().loadGMaps()
+//        )
+//
+//    }
 
