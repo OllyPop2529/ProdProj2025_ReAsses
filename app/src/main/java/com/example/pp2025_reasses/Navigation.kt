@@ -4,24 +4,20 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.pp2025_reasses.pages.LocationPage
-import com.example.pp2025_reasses.pages.SettingsPage
 import com.example.pp2025_reasses.pages.LoginPage
+import com.example.pp2025_reasses.pages.SettingsPage
 
 
-    @Composable
+@Composable
     fun AppNavigation(
-        viewModel: ATD_ViewModel = viewModel(),
+        viewModel: ATD_ViewModel,
         navController: NavHostController = rememberNavController()
     )
     {

@@ -28,8 +28,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.pp2025_reasses.R
-import com.example.pp2025_reasses.ui.theme.ActiveTheme
-
 
 @Composable
 fun LoginPage(
@@ -44,7 +42,9 @@ fun LoginPage(
     var isCreating by remember { mutableStateOf(false)}
 
     Column(
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
     )
 
     {

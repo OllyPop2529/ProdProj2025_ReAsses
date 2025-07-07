@@ -55,81 +55,96 @@ import com.google.android.gms.maps.GoogleMap
         //Empty Spacing for Padding, Will Contain Icon
         Scaffold(
             topBar = {},
+            containerColor = MaterialTheme.colorScheme.background,
+
         )
         {
             //LazyColumn acting as page scrolling
-            Column(
-                modifier = Modifier.padding(it)
+            Surface(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it),
+                color = MaterialTheme.colorScheme.background
             )
             {
-
-
-                LazyColumn(
-                    modifier = Modifier.weight(6.5f),
-                    contentPadding = it,
-
-                )
-                {
-                    item()
-                    {
-                        SectionBlock(
-                            title = "Maps",
-                            viewModel = viewModel,
-                            optionList = OptionData().loadGMaps()
-                        )
-                    }
-
-                    item()
-                    {
-                        SectionBlock(
-                            title = "Application",
-                            viewModel = viewModel,
-                            optionList = OptionData().loadTheme()
-                        )
-                    }
-                }
-
                 Column(
-                    verticalArrangement = Arrangement.Top,
-                    horizontalAlignment = Alignment.CenterHorizontally,
                     modifier = Modifier
-                        .weight(1.5f)
-                        .padding(bottom = 15.dp)
-                        .background(MaterialTheme.colorScheme.primary)
-                        .padding(horizontal = 15.dp)
-                        .fillMaxSize(),
+                        .background(MaterialTheme.colorScheme.background)
+
                 )
                 {
-                    Button(
-                        onClick = { onBack() },
-                        shape = RoundedCornerShape(corner = CornerSize(10.dp)),
-                        elevation = ButtonDefaults.buttonElevation(5.dp,0.dp),
+
+                    //LazyColumn acting as page scrolling
+                    LazyColumn(
                         modifier = Modifier
-                            .padding(all = 25.dp)
-                            .fillMaxSize(),
-                        colors = ButtonColors(
-                            containerColor = Color(54, 84, 100),
-                            contentColor = Color.White,
-                            disabledContainerColor = Color(59, 89, 105),
-                            disabledContentColor = Color.LightGray
-                        )
+                            .weight(6.5f),
+                        contentPadding = it,
 
 
-                    ) {
-                        Text(
-                            text = "Return",
-                            modifier = Modifier
-                                //.fillMaxWidth(0.55f)
-                                //.fillMaxSize(0.425f)
-                                .padding(horizontal = 10.dp)
-                                .align(Alignment.CenterVertically),
-                            textAlign = TextAlign.Center,
-                            fontSize = 27.sp,
-                            lineHeight = 32.sp,
                         )
+                    {
+                        item()
+                        {
+                            SectionBlock(
+                                title = "Maps",
+                                viewModel = viewModel,
+                                optionList = OptionData().loadGMaps()
+                            )
+                        }
+
+                        item()
+                        {
+                            SectionBlock(
+                                title = "Application",
+                                viewModel = viewModel,
+                                optionList = OptionData().loadTheme()
+                            )
+                        }
                     }
-                }
 
+                    //Button Area
+                    Column(
+                        verticalArrangement = Arrangement.Top,
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier
+                            .weight(1.5f)
+                            .padding(bottom = 15.dp)
+                            .background(MaterialTheme.colorScheme.primary)
+                            .padding(horizontal = 15.dp)
+                            .fillMaxSize(),
+                    )
+                    {
+                        Button(
+                            onClick = { onBack() },
+                            shape = RoundedCornerShape(corner = CornerSize(10.dp)),
+                            elevation = ButtonDefaults.buttonElevation(5.dp, 0.dp),
+                            modifier = Modifier
+                                .padding(all = 25.dp)
+                                .fillMaxSize(),
+                            colors = ButtonColors(
+                                containerColor = Color(54, 84, 100),
+                                contentColor = Color.White,
+                                disabledContainerColor = Color(59, 89, 105),
+                                disabledContentColor = Color.LightGray
+                            )
+
+
+                        ) {
+                            Text(
+                                text = "Return",
+                                modifier = Modifier
+                                    //.fillMaxWidth(0.55f)
+                                    //.fillMaxSize(0.425f)
+                                    .padding(horizontal = 10.dp)
+                                    .align(Alignment.CenterVertically),
+                                textAlign = TextAlign.Center,
+                                fontSize = 27.sp,
+                                lineHeight = 32.sp,
+                            )
+                        }
+                    }
+
+                }
             }
         }
 
@@ -147,7 +162,8 @@ import com.google.android.gms.maps.GoogleMap
         var isOpen by remember { mutableStateOf(true) }
 
         Column(
-            modifier = Modifier.padding(bottom = 5.dp)
+            modifier = Modifier
+                .padding(bottom = 5.dp)
         )
         {
             SectionHeader(
@@ -180,7 +196,9 @@ import com.google.android.gms.maps.GoogleMap
         modifier: Modifier
 
     ) {
-        Surface()
+        Surface(
+            modifier = Modifier
+        )
         {
 
             Row(

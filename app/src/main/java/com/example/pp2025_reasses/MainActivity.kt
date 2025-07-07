@@ -24,11 +24,13 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             val viewModel: ATD_ViewModel by viewModels()
-            val isTheme by viewModel.isDark.collectAsState()
+            val isDark by viewModel.isDark.collectAsState()
+            val isContrast by viewModel.isContrast.collectAsState()
+
 
             val themeMode = when {
-                isTheme -> ActiveTheme.DARK
-                viewModel.isContrast.collectAsState().value -> ActiveTheme.HIGH_CONTRAST
+                isContrast -> ActiveTheme.HIGH_CONTRAST
+                isDark -> ActiveTheme.DARK
                 else -> ActiveTheme.LIGHT
             }
 
@@ -38,7 +40,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                   AppNavigation()
+                   AppNavigation(
+                       viewModel = viewModel
+                   )
                 }
             }
         }
