@@ -52,6 +52,9 @@ import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.MapView
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 
 @Composable
@@ -63,6 +66,9 @@ fun LocationPage(
     val modifier : Modifier = Modifier
         .fillMaxSize()
 
+    val currentTime = remember {
+        SimpleDateFormat("dd MMM yyyy - HH:mm", Locale.getDefault()).format(Date())
+    }
 
     Column(
         modifier = Modifier
@@ -95,7 +101,16 @@ fun LocationPage(
                     modifier = Modifier
                         .fillMaxHeight(0.1f)
                         .align(Alignment.BottomCenter)
-
+                )
+                Text(
+                    text = currentTime,
+                    textAlign = TextAlign.Center,
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary,
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .padding(bottom = 8.dp)
                 )
             }
         }
